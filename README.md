@@ -1,4 +1,4 @@
-# Teaching-HEIGVD-API-2022-Labo-Orchestra
+# DAI-2022-UDP-Orchestra
 
 ## Admin
 
