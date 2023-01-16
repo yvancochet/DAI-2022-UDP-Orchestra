@@ -7,7 +7,7 @@ var chance = new Chance();
 function killAllContainers() {
 	docker.listContainers(function(err, containers) {
 		containers.forEach(function( container) {
-			if (container.Image === "api/musician" || container.Image === "api/auditor") {
+			if (container.Image === "dai/musician" || container.Image === "dai/auditor") {
 				console.log("Killing " + container.Id + " : " + container.Image);
 				var c = docker.getContainer(container.Id);
 				c.kill({}, function(err, data){});
@@ -19,7 +19,7 @@ function killAllContainers() {
 function killRandomMusicianContainer() {
 	docker.listContainers(function(err, containers) {
 		var musicians = containers.filter( function (container ) {
-			return container.Image === "api/musician";
+			return container.Image === "dai/musician";
 		});
 		if (musicians.length !== 0) {
 			console.log("There are " + musicians.length + " musicians, let's kill one");
@@ -62,7 +62,7 @@ function lookForMusicianContainers( containersHaveBeenFound ) {
 	var musicians = [];
 	docker.listContainers(function(err, containers) {
 		containers.forEach(function( container) {
-			if (container.Image === "api/musician") {
+			if (container.Image === "dai/musician") {
 				musicians.push(container.Command.split(' ')[2]);
 			}
 		});
@@ -75,7 +75,7 @@ function lookForAuditorContainers( containersHaveBeenFound ) {
 	docker.listContainers(function(err, containers) {
 		containers.forEach(function( container) {
 			//console.log("img: " + container.Image);
-			if (container.Image === "api/auditor") {
+			if (container.Image === "dai/auditor") {
 				auditors.push(container);
 			}
 		});
