@@ -108,56 +108,56 @@ Reminder: answer the following questions [here](https://forms.gle/6SM7cu4cYhNsRv
 | Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
 |          | _Insert your diagram here..._                                                                                                                                           |
 | Question | Who is going to **send UDP datagrams** and **when**?                                                                                                                    |
-|          | _Enter your response here..._                                                                                                                                           |
+|          | _The musicians are sending UDP datagram to the multicast group on port 9907. These datagrams contain the uuid of the musician, the instrument they play and the sound they make. The datagrams are sent every seconds_                                                                                                                                           |
 | Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received?                                                                        |
-|          | _Enter your response here..._                                                                                                                                           |
+|          | _Auditors are listenning for the datagram. When they receive a datagram, they add the transmitting musician to the active musician list if it doesn't already exists. This list is checked every seconds to remove musicians that are not active anymore._                                                                                                                                           |
 | Question | What **payload** should we put in the UDP datagrams?                                                                                                                    |
-|          | _Enter your response here..._                                                                                                                                           |
+|          | _{musician's uuid, instrument played, instrument's sound}_                                                                                                                                           |
 | Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures?                |
-|          | _Enter your response here..._                                                                                                                                           |
+|          | _UDP Sender (musicians) : a map with instruments and the sound they make -> t[instrument] = {sound} <br /> UDP Receiver (auditors) : a map with musician uuid, the instrument they play and an "active since" timestamp -> t[uuid] = {instrument, activeSince}_                                                                                                                                           |
 
 ## Task 2: implement a "musician" Node.js application
 
 | #        | Topic                                                                               |
 | -------- | ----------------------------------------------------------------------------------- |
 | Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-|          | _Enter your response here..._                                                       |
+|          | _With the function JSON.stringify(OBJECT)_                                          |
 | Question | What is **npm**?                                                                    |
-|          | _Enter your response here..._                                                       |
+|          | _NPM (Node Package Manager) is the default package manager for the JavaScript runtime environment Node.js. It allows you to install, update, and manage third-party libraries or modules in Node.js projects_ |
 | Question | What is the `npm install` command and what is the purpose of the `--save` flag?     |
-|          | _Enter your response here..._                                                       |
+|          | _The npm install command is used to install packages from the npm registry. The packages can be installed locally or globally, depending on the options specified. <br /> The --save flag is used to automatically save the installed package(s) as a dependency in the project's package.json file. This way, if all the project's dependencies are installed when running npm install command_ |
 | Question | How can we use the `https://www.npmjs.com/` web site?                               |
-|          | _Enter your response here..._                                                       |
+|          | _It is very usefull to search for module dependencies. It documents every version, etc. ..._ |
 | Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122?               |
-|          | _Enter your response here..._                                                       |
+|          | _By using uuid/v4 module <br/> `const { v4: uuidv4 } = require('uuid');` <br/> `uuidv4();`_ |
 | Question | In Node.js, how can we execute a function on a **periodic** basis?                  |
-|          | _Enter your response here..._                                                       |
+|          | _By using `setInterval(() => {}, TIME);` function to call the function between brackets each "TIME"_ |
 | Question | In Node.js, how can we **emit UDP datagrams**?                                      |
-|          | _Enter your response here..._                                                       |
+|          | _You can emit UDP datagrams using the functions available in dgram official module <br/> `const socket = dgram.createSocket('udp4');` <br/> `socket.connect(protocol.PROTOCOL_PORT, protocol.PROTOCOL_MULTICAST_ADDRESS);` <br/> `socket.send(message);`_ |
 | Question | In Node.js, how can we **access the command line arguments**?                       |
-|          | _Enter your response here..._                                                       |
+|          | _By using the `process.argv[argNum]` function._                                             |
 
 ## Task 3: package the "musician" app in a Docker image
 
 | #        | Topic                                                                               |
 | -------- | ----------------------------------------------------------------------------------- |
-| Question | What is the purpose of the `ENTRYPOINT` statement in our Dockerfile?                        |
-|          | _Enter your response here..._                                                       |
+| Question | What is the purpose of the `ENTRYPOINT` statement in our Dockerfile?                |
+|          | _ENTRYPOINT is used instead of CMD to pass the command line arguments to the container. It allows the container to run as a true executable._ |
 | Question | How can we check that our running containers are effectively sending UDP datagrams? |
-|          | _Enter your response here..._                                                       |
+|          | _We can sniff traffic with tools such as tcpdump to see what's going on_            |
 
 ## Task 4: implement an "auditor" Node.js application
 
 | #        | Topic                                                                                              |
 | -------- | -------------------------------------------------------------------------------------------------- |
 | Question | With Node.js, how can we listen for UDP datagrams in a multicast group?                            |
-|          | _Enter your response here..._                                                                      |
+|          | _We can use the dgram official module just ad for emitting datagrams check our code to see how we used it _ |
 | Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**? |
-|          | _Enter your response here..._                                                                      |
+|          | _`const INSTRUMENT_SOUNDS = new Map([["ti-ta-ti", "piano"], ["pouet", "trumpet"], ["trulu", "flute"], ["gzi-gzi", "violin"], ["boum-boum", "drum"]])`_ |
 | Question | When and how do we **get rid of inactive players**?                                                |
-|          | _Enter your response here..._                                                                      |
+|          | _Each 5 seconds using a function described in the end of our auditor.js file that will remove inactive musicians from our data structure_ |
 | Question | How do I implement a **simple TCP server** in Node.js?                                             |
-|          | _Enter your response here..._                                                                      |
+|          | _By using the net package `const net = require('net');` `const tcpServer = net.createServer();` `tcpServer.listen(TCP_PORT);`_  |
 
 ## Task 5: package the "auditor" app in a Docker image
 
