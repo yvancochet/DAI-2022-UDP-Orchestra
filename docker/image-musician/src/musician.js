@@ -17,7 +17,7 @@ const uuid = uuidv4();
 
 //Connect to multicast grp
 socket.connect(protocol.PROTOCOL_PORT, protocol.PROTOCOL_MULTICAST_ADDRESS, function(err, bytes){
-   console.log(`Musician udp set to multicast adr ${socket.address().address} and port ${socket.address().port}`);
+   console.log(`Musician udp set to multicast adr ${socket.address().address} via port ${socket.address().port}`);
 });
 
 //Send multicast payload

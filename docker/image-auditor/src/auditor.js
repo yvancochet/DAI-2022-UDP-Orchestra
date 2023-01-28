@@ -22,8 +22,8 @@ server.bind(protocol.PROTOCOL_UDP_PORT, () => {
 });
 
 // Create a TCP server to handle client connections and send activeMusicians
-const tcpServer = net.createServer((socket) => {
-  socket.on('data', (data) => {
+const tcpServer = net.createServer();
+tcpServer.on('connection', function(socket) {
     const activeMusiciansList = Object.keys(activeMusicians)
       .map((uuid) => {
         return {
@@ -34,7 +34,6 @@ const tcpServer = net.createServer((socket) => {
       });
     socket.write(JSON.stringify(activeMusiciansList));
     socket.end();
-  });
 });
 
 tcpServer.listen(protocol.PROTOCOL_TCP_PORT, () => {
@@ -50,4 +49,4 @@ setInterval(() => {
       delete activeMusicians[uuid];
     }
   });
-}, 5000);
+}, 1000);
