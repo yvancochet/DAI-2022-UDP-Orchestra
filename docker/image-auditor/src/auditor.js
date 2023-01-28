@@ -12,7 +12,7 @@ server.on('message', (message, remote) => {
   console.log(`Receive UDP message : ${message}`);
   const msg = JSON.parse(message);
   const { uuid, instrument } = msg;
-  activeMusicians[uuid] = { instrument, activeSince: new Date() };  
+  activeMusicians[uuid] = { instrument: instrument, activeSince: new Date() };  
 });
 
 // UDP server parameter set
@@ -29,7 +29,7 @@ const tcpServer = net.createServer((socket) => {
         return {
           uuid,
           instrument: activeMusicians[uuid].instrument,
-          activeSince: activeMusicians[uuid].activeSince.toISOString(),
+          activeSince: activeMusicians[uuid].activeSince.toISOString()
         };
       });
     socket.write(JSON.stringify(activeMusiciansList));

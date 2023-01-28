@@ -13,7 +13,7 @@ const sounds = {
 };
 
 const socket = dgram.createSocket('udp4');
-const musicianId = uuidv4();
+const uuid = uuidv4();
 
 //Connect to multicast grp
 socket.connect(protocol.PROTOCOL_PORT, protocol.PROTOCOL_MULTICAST_ADDRESS, function(err, bytes){
@@ -23,7 +23,7 @@ socket.connect(protocol.PROTOCOL_PORT, protocol.PROTOCOL_MULTICAST_ADDRESS, func
 //Send multicast payload
 setInterval(() => {
   const sound = sounds[instrument];
-  const message = JSON.stringify({ musicianId, instrument, sound });
+  const message = JSON.stringify({ uuid, instrument, sound });
 
   socket.send(message, function(err, bytes){
       console.log(`Send payload: ${message} via prt ${socket.address().port} `);
