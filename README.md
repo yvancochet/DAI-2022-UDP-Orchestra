@@ -164,7 +164,7 @@ Reminder: answer the following questions [here](https://forms.gle/6SM7cu4cYhNsRv
 | #        | Topic                                                                                |
 | -------- | ------------------------------------------------------------------------------------ |
 | Question |Send us the log file of the validation script to show that everything is ok           |
-|          | _Enter your response here..._                                                        |
+|          | _[logfile](check.log)_                                                        |
 
 ## Constraints
 
