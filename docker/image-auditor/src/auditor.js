@@ -2,10 +2,9 @@ const dgram = require('dgram');
 const protocol = require('./protocol');
 const server = dgram.createSocket('udp4');
 const net = require('net');
-const { v4: uuidv4 } = require('uuid');
+
 
 let activeMusicians = {};
-
 
 //Update activeMusicians when receiving UDP payload from musicians
 server.on('message', (message, remote) => {
